@@ -1,14 +1,3 @@
-Perfeito! Vou analisar o repositório do projeto UniPet no GitHub para criar um README em Markdown detalhado. Esse README incluirá:
-
-* Descrição geral do projeto (CRUD com Json-Server)
-* Instruções de instalação e execução
-* Explicação sobre o uso do Json-Server como banco de dados
-* Lista de rotas disponíveis e seu propósito
-* Possíveis instruções sobre variáveis de ambiente ou scripts npm
-
-Assim que estiver pronto, te aviso para revisar.
-
-
 # UniPet
 
 UniPet é um sistema CRUD para gerenciamento de pets (animais de estimação), desenvolvido em Node.js. O projeto fornece uma interface web simples (usando EJS) para listar, cadastrar, atualizar e remover registros de pets, armazenados em um banco de dados falso via **JSON-Server**.
