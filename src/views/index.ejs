@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registro de Animais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Estilos da Tabela */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .action {
+            width: 25px;
+        }
+
+        .delete-btn {
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        /* Estilos do Formulário */
+        .form-container {
+            width: 80%;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        input {
+            padding: 5px;
+            text-align: center;
+            width: 150px;
+        }
+
+        .form-btn {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .form-btn button {
+            background: green;
+        }
+
+        button {
+            color: white;
+            padding: 7px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action {
+            width: auto;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 5px;
+            /* Espaçamento entre os botões */
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>UniPet - ADS</h2>
+    <p>RA: 1189354-23</p>
+
+    <!-- Formulário de Adição -->
+    <form action="/pet/create" method="POST" class="form-container">
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Espécie:</label>
+            <input type="text" name="gender" required>
+        </div>
+
+        <div class="form-group">
+            <label>Raça:</label>
+            <input type="text" name="breed" required>
+        </div>
+
+        <div class="form-group">
+            <label>Idade:</label>
+            <input type="number" name="age" required>
+        </div>
+
+        <div class="form-group">
+            <label>Tutor:</label>
+            <input type="text" name="guardian" required>
+        </div>
+
+        <div class="form-group">
+            <label>Atividade:</label>
+            <input type="text" name="action" required>
+        </div>
+
+        <div class="form-btn">
+            <button type="submit">Adicionar</button>
+        </div>
+    </form>
+
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Espécie</th>
+            <th>Raça</th>
+            <th>Idade</th>
+            <th>Tutor</th>
+            <th>Atividade</th>
+            <th class="action">Ação</th>
+        </tr>
+
+        <% if (pets.length> 0) { %>
+            <% pets.forEach(pet=> { %>
+                <tr id="row-<%= pet.id %>">
+                    <td>
+                        <%= pet.name %>
+                    </td>
+                    <td>
+                        <%= pet.gender %>
+                    </td>
+                    <td>
+                        <%= pet.breed %>
+                    </td>
+                    <td>
+                        <%= pet.age %> anos
+                    </td>
+                    <td>
+                        <%= pet.guardian %>
+                    </td>
+                    <td>
+                        <%= pet.action %>
+                    </td>
+                    <td class="action">
+                        <div class="btn-group">
+                            <button onclick="editPet('<%= pet.id %>')">✏️</button>
+                            <form action="/pet/delete/<%= pet.id %>" method="POST">
+                                <button class="delete-btn">🗑️</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="edit-form-<%= pet.id %>" style="display: none;">
+                    <form action="/pet/update/<%= pet.id %>" method="POST">
+                        <td><input type="text" name="name" value="<%= pet.name %>" required></td>
+                        <td><input type="text" name="gender" value="<%= pet.gender %>" required></td>
+                        <!-- Agora editável -->
+                        <td><input type="text" name="breed" value="<%= pet.breed %>" required></td>
+                        <!-- Agora editável -->
+                        <td><input type="number" name="age" value="<%= pet.age %>" required></td>
+                        <td><input type="text" name="guardian" value="<%= pet.guardian %>" required></td>
+                        <td>
+                            <%= pet.action %>
+                        </td> <!-- Mantendo a exibição da atividade -->
+                        <td class="action">
+                            <button type="submit">✅</button>
+                            <button type="button" onclick="cancelEdit('<%= pet.id %>')">❌</button>
+                        </td>
+                    </form>
+                </tr>
+                <% }); %>
+                    <% } %>
+    </table>
+
+
+
+    <script>
+        function editPet(id) {
+            document.getElementById(`row-${id}`).style.display = "none";
+            document.getElementById(`edit-form-${id}`).style.display = "table-row";
+        }
+
+        function cancelEdit(id) {
+            document.getElementById(`row-${id}`).style.display = "table-row";
+            document.getElementById(`edit-form-${id}`).style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
